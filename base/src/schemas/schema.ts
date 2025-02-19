@@ -1,6 +1,5 @@
 import { z } from "zod";
 
-// Base interfaces
 interface Technology {
   name: string;
   technologies?: string[];

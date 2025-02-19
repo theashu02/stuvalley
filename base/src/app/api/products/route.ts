@@ -1,6 +1,5 @@
 import { connectDB, ProductModel } from "@/db/db";
 import { NextResponse } from "next/server";
-import { ProductsSchema } from "@/schemas/schema";
 
 export async function GET() {
   try {
