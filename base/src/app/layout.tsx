@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   title: "StuVellyBase",
@@ -13,10 +14,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-      
-      >
-        {children}
+      <body>
+        <main>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </main>
       </body>
     </html>
   );
