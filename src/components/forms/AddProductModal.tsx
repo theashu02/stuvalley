@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductSchema } from "@/schemas/schema";
 import { Plus } from "lucide-react";
 import { toast } from "sonner";
+import axios from 'axios';
 
 interface AddProductModalProps {
   onProductAdded: () => void;
@@ -40,21 +40,9 @@ export default function AddProductModal({ onProductAdded }: AddProductModalProps
       link: "",
     },
   });
-
   const onSubmit = async (data: any) => {
     try {
-      const response = await fetch("/api/products", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ products: [data] }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to add product");
-      }
-
+      await axios.post("/api/products", { products: [data] });
       toast.success("Product added successfully");
       form.reset();
       setOpen(false);
@@ -64,6 +52,30 @@ export default function AddProductModal({ onProductAdded }: AddProductModalProps
       console.error("Error adding product:", error);
     }
   };
+
+  // const onSubmit = async (data: any) => {
+  //   try {
+  //     const response = await fetch("/api/products", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ products: [data] }),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error("Failed to add product");
+  //     }
+
+  //     toast.success("Product added successfully");
+  //     form.reset();
+  //     setOpen(false);
+  //     onProductAdded();
+  //   } catch (error) {
+  //     toast.error("Failed to add product");
+  //     console.error("Error adding product:", error);
+  //   }
+  // };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
