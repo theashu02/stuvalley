@@ -17,6 +17,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 import AddProductModal from "@/components/forms/AddProductModal";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
+import EditProductModal from "@/components/forms/EditProductModal";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -120,6 +127,41 @@ export default function ProductsPage() {
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <span>{product.name}</span>
+                  <div className="flex gap-2">
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div>
+                            <EditProductModal 
+                              product={product} 
+                              onProductUpdated={fetchProducts} 
+                            />
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Edit product</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            variant="destructive"
+                            size="icon"
+                            className="opacity-0 group-hover:opacity-100 transition-opacity"
+                            onClick={() => deleteProduct(product._id)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Delete product</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
                 </CardTitle>
                 <CardDescription className="line-clamp-2">
                   {product.description}
@@ -138,13 +180,6 @@ export default function ProductsPage() {
                 >
                   <ExternalLink className="mr-2 h-4 w-4" />
                   Visit Website
-                </Button>
-                <Button
-                  variant="destructive"
-                  size="icon"
-                  onClick={() => deleteProduct(product._id)}
-                >
-                  <Trash2 className="h-4 w-4" />
                 </Button>
               </CardFooter>
             </Card>
