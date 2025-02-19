@@ -69,9 +69,9 @@ export default function EditResearchModal({ research, onResearchUpdated }: EditR
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          variant="ghost"
+          variant="outline"
           size="icon"
-          className="opacity-0 group-hover:opacity-100 transition-opacity"
+          className="group-hover:opacity-100 transition-opacity"
         >
           <Pencil className="h-4 w-4 text-muted-foreground" />
         </Button>

@@ -49,7 +49,6 @@ export default function EditServiceModal({ service, onServiceUpdated }: EditServ
   const onSubmit = async (data: any) => {
     try {
       await axios.put(`/api/services/${service._id}`, data);
-
       toast({
         description: "Service updated successfully",
       });
@@ -84,9 +83,9 @@ export default function EditServiceModal({ service, onServiceUpdated }: EditServ
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          variant="ghost"
+          variant="outline"
           size="icon"
-          className="opacity-0 group-hover:opacity-100 transition-opacity"
+          className="group-hover:opacity-100 transition-opacity"
         >
           <Pencil className="h-4 w-4 text-muted-foreground" />
         </Button>
