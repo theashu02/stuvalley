@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { ProductType } from "@/schemas/schema";
 import { Button } from "@/components/ui/button";
@@ -16,17 +15,19 @@ import { ExternalLink, Trash2, Package } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
 import AddProductModal from "@/components/forms/AddProductModal";
+import { useToast } from "@/hooks/use-toast";
+import axios from "axios";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch("/api/products");
-      const data = await response.json();
+      const response = await axios.get("/api/products");
       setTimeout(() => {
-        setProducts(data.products);
+        setProducts(response.data.products);
         setLoading(false);
       }, 2000);
     } catch (error) {
@@ -41,8 +42,9 @@ export default function ProductsPage() {
 
   const deleteProduct = async (id: string) => {
     try {
-      await fetch(`/api/products/${id}`, {
-        method: "DELETE",
+      await axios.delete(`/api/products/${id}`);
+      toast({
+        description: "Deleted Successfully",
       });
       fetchProducts();
     } catch (error) {
