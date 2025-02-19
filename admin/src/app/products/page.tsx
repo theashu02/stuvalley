@@ -24,6 +24,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { ModeToggle } from "../theme";
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -75,11 +76,16 @@ export default function ProductsPage() {
 
   if (loading) {
     return (
-      <div className="container mx-auto p-8 animate-fadeIn">
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-2">
-            <Package className="h-6 w-6 animate-bounce" />
-            <h2 className="text-3xl font-bold">Products</h2>
+      <div className="container mx-auto p-8 animate-fadeIn px-12">
+        <div className="flex flex-col sm:flex-row items-center justify-between mb-8 animate-slideInUp gap-6">
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+            <div className="flex items-center gap-3 mb-4 sm:mb-0">
+              <Package className="h-8 w-8 text-primary animate-float mr-3" />
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+                Products
+              </h1>
+              <ModeToggle />
+            </div>
           </div>
           <AddProductModal onProductAdded={fetchProducts} />
         </div>
@@ -123,11 +129,16 @@ export default function ProductsPage() {
   }
 
   return (
-    <div className="container mx-auto p-8 animate-fadeIn">
-      <div className="flex items-center justify-between mb-8">
-        <div className="flex items-center gap-2">
-          <Package className="h-6 w-6 hover:animate-bounce" />
-          <h2 className="text-3xl font-bold">Products</h2>
+    <div className="container mx-auto p-8 animate-fadeIn px-12">
+      <div className="flex flex-col sm:flex-row items-center justify-between mb-8 animate-slideInUp gap-6">
+        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+          <div className="flex items-center gap-3 mb-4 sm:mb-0">
+            <Package className="h-8 w-8 text-primary animate-float mr-3" />
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+              Products
+            </h1>
+            <ModeToggle />
+          </div>
         </div>
         <AddProductModal onProductAdded={fetchProducts} />
       </div>

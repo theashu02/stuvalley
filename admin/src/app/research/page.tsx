@@ -29,6 +29,7 @@ import AddResearchModal from "@/components/forms/AddResearchModal";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 import EditResearchModal from "@/components/forms/EditResearchModal";
+import { ModeToggle } from "../theme";
 
 export default function App() {
   const [research, setResearch] = useState<ResearchContribution[]>([]);
@@ -89,7 +90,7 @@ export default function App() {
   }
 
   return (
-    <div className="container mx-auto py-8 px-4 animate-fadeIn">
+    <div className="container mx-auto py-8 px-12 animate-fadeIn">
       <style jsx global>{`
         @keyframes fadeIn {
           from {
@@ -131,12 +132,15 @@ export default function App() {
         }
       `}</style>
 
-      <div className="flex items-center justify-between mb-8 animate-slideInUp">
-        <div className="flex items-center gap-3">
-          <BookOpen className="h-8 w-8 text-primary animate-float" />
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-            Research Contributions
-          </h1>
+      <div className="flex flex-col sm:flex-row items-center justify-between mb-8 animate-slideInUp gap-6">
+        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+          <div className="flex items-center gap-3 mb-4 sm:mb-0">
+            <BookOpen className="h-8 w-8 text-primary animate-float mr-3" />
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+              Research Contributions
+            </h1>
+            <ModeToggle />
+          </div>
         </div>
         <AddResearchModal onResearchAdded={fetchResearch} />
       </div>

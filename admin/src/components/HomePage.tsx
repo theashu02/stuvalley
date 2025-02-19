@@ -1,9 +1,17 @@
 "use client";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
-import { BeakerIcon, ShoppingBagIcon, WrenchIcon } from "lucide-react";
+import {
+  BeakerIcon,
+  ShoppingBagIcon,
+  WrenchIcon,
+  Linkedin,
+  Github,
+  Globe,
+} from "lucide-react";
 import Link from "next/link";
 import { ModeToggle } from "@/app/theme";
+import { Button } from "./ui/button";
 
 const cards = [
   {
@@ -125,6 +133,61 @@ export default function HomePage() {
               </motion.div>
             </Link>
           ))}
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex text-center my-10 justify-center"
+        >
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Button
+              asChild
+              variant="outline"
+              className="group hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white transition-all duration-300"
+            >
+              <Link
+                href="https://stuvalley.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2"
+              >
+                <Globe className="h-5 w-5 group-hover:animate-spin-slow transition-transform" />
+                <span>Base Website</span>
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              className="group hover:bg-[#333] hover:text-white transition-all duration-300"
+            >
+              <Link
+                href="https://github.com/theashu02/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2"
+              >
+                <Github className="h-5 w-5 group-hover:rotate-12 transition-transform" />
+                <span>GitHub</span>
+              </Link>
+            </Button>
+
+            <Button
+              asChild
+              variant="outline"
+              className="group hover:bg-[#0077b5] hover:text-white transition-all duration-300"
+            >
+              <Link
+                href="https://www.linkedin.com/in/theashuchauhan/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2"
+              >
+                <Linkedin className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                <span>LinkedIn</span>
+              </Link>
+            </Button>
+          </div>
         </motion.div>
       </div>
     </div>
