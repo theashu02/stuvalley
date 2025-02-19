@@ -43,6 +43,7 @@ const SubServiceSchema = z.object({
 });
 
 const ServiceCategorySchema = z.object({
+   _id: z.string(),
   category: z.string(),
   description: z.string(),
   sub_services: z.array(SubServiceSchema),
@@ -53,6 +54,7 @@ const ServicesSchema = z.object({
 });
 
 const ProductSchema = z.object({
+   _id: z.string(),
   name: z.string(),
   description: z.string(),
   link: z.string().url(),
@@ -63,6 +65,7 @@ const ProductsSchema = z.object({
 });
 
 const ResearchContributionSchema = z.object({
+  _id: z.string(),
   title: z.string(),
   year: z
     .number()
