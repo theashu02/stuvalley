@@ -133,7 +133,7 @@ export default function App() {
                             variant="ghost"
                             size="icon"
                             className="opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
-                            onClick={() => deleteResearch(item._id)}
+                            onClick={() => item._id && deleteResearch(item._id)}
                           >
                             <Trash2 className="h-4 w-4 text-destructive" />
                           </Button>

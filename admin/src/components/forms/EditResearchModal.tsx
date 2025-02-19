@@ -38,6 +38,7 @@ export default function EditResearchModal({ research, onResearchUpdated }: EditR
   const form = useForm({
     resolver: zodResolver(ResearchContributionSchema),
     defaultValues: {
+      _id: research._id,
       title: research.title,
       year: research.year,
       type: research.type,

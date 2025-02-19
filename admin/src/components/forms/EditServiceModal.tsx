@@ -39,6 +39,7 @@ export default function EditServiceModal({ service, onServiceUpdated }: EditServ
   const form = useForm({
     resolver: zodResolver(ServiceCategorySchema),
     defaultValues: {
+      _id: service._id,
       category: service.category,
       description: service.description,
       sub_services: service.sub_services,

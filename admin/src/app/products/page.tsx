@@ -37,9 +37,18 @@ export default function ProductsPage() {
         setProducts(response.data.products);
         setLoading(false);
       }, 2000);
+      setTimeout(() => {
+        toast({
+          description: "Products fetched successfully.",
+        });
+      }, 1500);
     } catch (error) {
       console.error("Error fetching products:", error);
       setLoading(false);
+      toast({
+        variant: "destructive",
+        description: "Failed to fetch products. Please try again.",
+      });
     }
   };
 
@@ -56,22 +65,27 @@ export default function ProductsPage() {
       fetchProducts();
     } catch (error) {
       console.error("Error deleting product:", error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to Delete products. Please try again.",
+      });
     }
   };
 
   if (loading) {
     return (
-      <div className="container mx-auto p-8">
+      <div className="container mx-auto p-8 animate-fadeIn">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-2">
-            <Package className="h-6 w-6" />
+            <Package className="h-6 w-6 animate-bounce" />
             <h2 className="text-3xl font-bold">Products</h2>
           </div>
           <AddProductModal onProductAdded={fetchProducts} />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[...Array(6)].map((_, i) => (
-            <Card key={i} className="overflow-hidden">
+            <Card key={i} className="overflow-hidden animate-pulse">
               <CardHeader>
                 <Skeleton className="h-6 w-3/4" />
                 <Skeleton className="h-4 w-full" />
@@ -91,15 +105,15 @@ export default function ProductsPage() {
 
   if (!products.length) {
     return (
-      <div className="container mx-auto p-8">
+      <div className="container mx-auto p-8 animate-fadeIn">
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-2">
-            <Package className="h-6 w-6" />
+            <Package className="h-6 w-6 animate-bounce" />
             <h2 className="text-3xl font-bold">Products</h2>
           </div>
           <AddProductModal onProductAdded={fetchProducts} />
         </div>
-        <Alert>
+        <Alert className="animate-slideIn">
           <AlertDescription>
             No products found. Add some products to get started.
           </AlertDescription>
@@ -109,20 +123,60 @@ export default function ProductsPage() {
   }
 
   return (
-    <div className="container mx-auto p-8">
+    <div className="container mx-auto p-8 animate-fadeIn">
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-2">
-          <Package className="h-6 w-6" />
+          <Package className="h-6 w-6 hover:animate-bounce" />
           <h2 className="text-3xl font-bold">Products</h2>
         </div>
         <AddProductModal onProductAdded={fetchProducts} />
       </div>
+      <style jsx global>{`
+        @keyframes slideIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        @keyframes scaleIn {
+          from {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.5s ease-out;
+        }
+        .animate-slideIn {
+          animation: slideIn 0.5s ease-out;
+        }
+        .animate-scaleIn {
+          animation: scaleIn 0.3s ease-out;
+        }
+      `}</style>
       <ScrollArea className="h-[calc(100vh-12rem)] custom-scrollbar">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product) => (
+          {products.map((product, index) => (
             <Card
               key={product._id}
-              className="group hover:shadow-lg transition-all duration-300"
+              className="group hover:shadow-lg animate-scaleIn transition-transform duration-300"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
@@ -131,10 +185,10 @@ export default function ProductsPage() {
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
-                          <div>
-                            <EditProductModal 
-                              product={product} 
-                              onProductUpdated={fetchProducts} 
+                          <div className="transform transition-transform hover:scale-105">
+                            <EditProductModal
+                              product={product}
+                              onProductUpdated={fetchProducts}
                             />
                           </div>
                         </TooltipTrigger>
@@ -150,8 +204,10 @@ export default function ProductsPage() {
                           <Button
                             variant="destructive"
                             size="icon"
-                            className="opacity-0 group-hover:opacity-100 transition-opacity"
-                            onClick={() => deleteProduct(product._id)}
+                            className="group-hover:opacity-100 transition-opacity duration-300 transform hover:scale-105"
+                            onClick={() =>
+                              product._id && deleteProduct(product._id)
+                            }
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
@@ -175,7 +231,7 @@ export default function ProductsPage() {
               <CardFooter className="flex justify-between gap-4">
                 <Button
                   variant="outline"
-                  className="w-full"
+                  className="w-full transform transition-transform hover:scale-105"
                   onClick={() => window.open(product.link, "_blank")}
                 >
                   <ExternalLink className="mr-2 h-4 w-4" />

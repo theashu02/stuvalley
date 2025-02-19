@@ -112,7 +112,7 @@ export default function page() {
                           variant="ghost"
                           size="icon"
                           className="opacity-0 group-hover:opacity-100 transition-opacity"
-                          onClick={() => deleteService(service._id)}
+                          onClick={() => service._id && deleteService(service._id)}
                         >
                           <Trash2 className="h-4 w-4 text-destructive" />
                         </Button>

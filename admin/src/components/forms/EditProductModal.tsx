@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import {
@@ -39,6 +38,7 @@ export default function EditProductModal({ product, onProductUpdated }: EditProd
   const form = useForm({
     resolver: zodResolver(ProductSchema),
     defaultValues: {
+      _id: product._id,
       name: product.name,
       description: product.description,
       link: product.link,
@@ -48,7 +48,6 @@ export default function EditProductModal({ product, onProductUpdated }: EditProd
   const onSubmit = async (data: any) => {
     try {
       await axios.put(`/api/products/${product._id}`, data);
-
       toast({
         description: "Product updated successfully",
       });
@@ -67,9 +66,9 @@ export default function EditProductModal({ product, onProductUpdated }: EditProd
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
-          variant="ghost"
+          variant="outline"
           size="icon"
-          className="opacity-0 group-hover:opacity-100 transition-opacity"
+          className=" group-hover:opacity-100 transition-opacity"
         >
           <Pencil className="h-4 w-4 text-muted-foreground" />
         </Button>

@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-// Base interfaces
 interface Technology {
   name: string;
   technologies?: string[];
@@ -44,9 +43,10 @@ const SubServiceSchema = z.object({
 });
 
 const ServiceCategorySchema = z.object({
+  _id: z.string().optional(),
   category: z.string(),
   description: z.string(),
-  sub_services: z.array(SubServiceSchema)
+  sub_services: z.array(SubServiceSchema),
 });
 
 const ServicesSchema = z.object({
@@ -54,9 +54,10 @@ const ServicesSchema = z.object({
 });
 
 const ProductSchema = z.object({
+  _id: z.string().optional(),
   name: z.string(),
   description: z.string(),
-  link: z.string().url()
+  link: z.string().url(),
 });
 
 const ProductsSchema = z.object({
@@ -64,6 +65,7 @@ const ProductsSchema = z.object({
 });
 
 const ResearchContributionSchema = z.object({
+   _id: z.string().optional(),
   title: z.string(),
   year: z.number().int().min(1900).max(new Date().getFullYear() + 1),
   type: z.string(),
