@@ -187,6 +187,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Wrench } from "lucide-react";
+import { ModeToggle } from "../theme";
 
 export default function page() {
   const [services, setServices] = useState<Service[]>([]);
@@ -201,7 +202,11 @@ export default function page() {
   const fetchServices = async () => {
     try {
       const response = await axios.get("/api/services");
-      setServices(response.data.services);
+      
+      setTimeout(() => {
+        setServices(response.data.services);
+        setLoading(false);
+      }, 1000);
       toast({
         description: "Services fetched successfully.",
       });
@@ -241,13 +246,14 @@ export default function page() {
         <div className="flex items-center gap-2">
           <Loader2 className="h-6 w-6 animate-spin" />
           <span className="text-lg font-medium">Loading services...</span>
+          
         </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto py-8 px-4 animate-fadeIn">
+    <div className="container mx-auto py-8 px-12 animate-fadeIn">
       <style jsx global>{`
         @keyframes fadeIn {
           from {
@@ -302,16 +308,18 @@ export default function page() {
         }
       `}</style>
 
-      <div className="flex items-center justify-between mb-8 animate-slideIn">
-        <div className="flex items-center gap-3">
-          <Wrench className="h-8 w-8 text-primary animate-float" />
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-            Services
-          </h1>
+      <div className="flex flex-col sm:flex-row items-center justify-between mb-8 animate-slideInUp gap-6">
+        <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+          <div className="flex items-center gap-3 mb-4 sm:mb-0">
+            <Wrench className="h-8 w-8 text-primary animate-float mr-3" />
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+              Services
+            </h1>
+            <ModeToggle />
+          </div>
         </div>
         <AddServiceModal onServiceAdded={fetchServices} />
       </div>
-
       {error && (
         <Alert variant="destructive" className="mb-6 animate-slideIn">
           <AlertCircle className="h-4 w-4" />
