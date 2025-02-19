@@ -93,7 +93,6 @@ html {
   background: #909ca0;
 }
 
-/* Hide scrollbar */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
@@ -101,4 +100,14 @@ html {
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

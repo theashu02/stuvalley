@@ -1,71 +1,5 @@
 "use client";
 
-// import { useState, useEffect } from "react";
-// import { ProductType } from "@/schemas/schema";
-// import { Button } from "@/components/ui/button";
-
-// export default function Products() {
-//   const [products, setProducts] = useState<ProductType[]>([]);
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     fetchProducts();
-//   }, []);
-
-//   const fetchProducts = async () => {
-//     try {
-//       const response = await fetch("/api/products");
-//       const data = await response.json();
-//       setProducts(data.products);
-//       setLoading(false);
-//     } catch (error) {
-//       console.error("Error fetching products:", error);
-//       setLoading(false);
-//     }
-//   };
-
-//   const deleteProduct = async (id: string) => {
-//     try {
-//       await fetch(`/api/products/${id}`, {
-//         method: "DELETE",
-//       });
-//       fetchProducts();
-//     } catch (error) {
-//       console.error("Error deleting product:", error);
-//     }
-//   };
-
-//   if (loading) return <div>Loading products...</div>;
-
-//   return (
-//     <div className="p-4">
-//       <h2 className="text-2xl font-bold mb-4">Products</h2>
-//       <div className="grid gap-4">
-//         {products.map((product) => (
-//           <div key={product._id} className="border p-4 rounded-lg">
-//             <h3 className="text-xl font-semibold">{product.name}</h3>
-//             <p className="text-gray-600">{product.description}</p>
-//             <a
-//               href={product.link}
-//               target="_blank"
-//               rel="noopener noreferrer"
-//               className="text-blue-500 hover:underline block mt-2"
-//             >
-//               Visit Website
-//             </a>
-//             <Button
-//               variant="destructive"
-//               className="mt-4"
-//               onClick={() => deleteProduct(product._id)}
-//             >
-//               Delete
-//             </Button>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
 import { useState, useEffect } from "react";
 import { ProductType } from "@/schemas/schema";
 import { Button } from "@/components/ui/button";
@@ -81,26 +15,29 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { ExternalLink, Trash2, Package } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Skeleton } from "@/components/ui/skeleton";
+import AddProductModal from "@/components/forms/AddProductModal";
 
-export default function page() {
+export default function ProductsPage() {
   const [products, setProducts] = useState<ProductType[]>([]);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
   const fetchProducts = async () => {
     try {
       const response = await fetch("/api/products");
       const data = await response.json();
-      setProducts(data.products);
-      setLoading(false);
+      setTimeout(() => {
+        setProducts(data.products);
+        setLoading(false);
+      }, 2000);
     } catch (error) {
       console.error("Error fetching products:", error);
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   const deleteProduct = async (id: string) => {
     try {
@@ -116,9 +53,12 @@ export default function page() {
   if (loading) {
     return (
       <div className="container mx-auto p-8">
-        <div className="flex items-center gap-2 mb-8">
-          <Package className="h-6 w-6" />
-          <h2 className="text-3xl font-bold">Products</h2>
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-2">
+            <Package className="h-6 w-6" />
+            <h2 className="text-3xl font-bold">Products</h2>
+          </div>
+          <AddProductModal onProductAdded={fetchProducts} />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[...Array(6)].map((_, i) => (
@@ -143,9 +83,12 @@ export default function page() {
   if (!products.length) {
     return (
       <div className="container mx-auto p-8">
-        <div className="flex items-center gap-2 mb-8">
-          <Package className="h-6 w-6" />
-          <h2 className="text-3xl font-bold">Products</h2>
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-2">
+            <Package className="h-6 w-6" />
+            <h2 className="text-3xl font-bold">Products</h2>
+          </div>
+          <AddProductModal onProductAdded={fetchProducts} />
         </div>
         <Alert>
           <AlertDescription>
@@ -158,11 +101,14 @@ export default function page() {
 
   return (
     <div className="container mx-auto p-8">
-      <div className="flex items-center gap-2 mb-8">
-        <Package className="h-6 w-6" />
-        <h2 className="text-3xl font-bold">Products</h2>
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-2">
+          <Package className="h-6 w-6" />
+          <h2 className="text-3xl font-bold">Products</h2>
+        </div>
+        <AddProductModal onProductAdded={fetchProducts} />
       </div>
-      <ScrollArea className="h-[calc(100vh-12rem)]">
+      <ScrollArea className="h-[calc(100vh-12rem)] custom-scrollbar">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => (
             <Card
