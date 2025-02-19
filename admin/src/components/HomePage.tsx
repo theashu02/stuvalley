@@ -138,7 +138,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex text-center my-10 justify-center"
+          className="flex text-center my-8 justify-center"
         >
           <div className="flex flex-col sm:flex-row gap-4">
             <Button
